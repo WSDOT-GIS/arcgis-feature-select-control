@@ -8,10 +8,18 @@ import {
   IGeometry
 } from "@esri/arcgis-rest-common-types";
 
+/**
+ * Represents the attributes property of a feature.
+ */
 interface IAttributeList {
   [key: string]: any;
 }
 
+/**
+ * Returns the name of the first field of string type or the name of the first string property detected.
+ * @param attributes - Either an array of Field objects or an attributes object.
+ * @throws {Error} - Thrown if a string field / attribute cannot be found in the input.
+ */
 function getFirstStringField(attributes: IAttributeList | IField[]) {
   if (Array.isArray(attributes)) {
     for (const field of attributes) {
@@ -32,10 +40,17 @@ function getFirstStringField(attributes: IAttributeList | IField[]) {
   throw new Error("Could not find string field or attribute.");
 }
 
+/**
+ * Adds support for additional custom events
+ */
 export interface IFeatureSelectEventMap extends HTMLElementEventMap {
   featureselect: CustomEvent<IFeature[]>;
 }
 
+/**
+ * Extension of the HTMLSelectElement interface, which adds support for
+ * the "featureselect" custom event.
+ */
 export interface IFeatureSelect extends HTMLSelectElement {
   readonly selectedOptions: HTMLCollectionOf<IFeatureOptionElement>;
   addEventListener<K extends keyof IFeatureSelectEventMap>(
@@ -61,10 +76,17 @@ function populateElementDataset<T extends HTMLElement>(
 }
 
 export interface IFeatureDOMStringMap extends DOMStringMap {
+  /** JSON string representation of an IGeometry object. */
   geometry?: string;
+  /**
+   * JSON string representation of an IFeature's attribute list.
+   */
   attributes?: string;
 }
 
+/**
+ * An option within an IFeatureSelect.
+ */
 export interface IFeatureOptionElement extends HTMLOptionElement {
   dataset: IFeatureDOMStringMap;
 }
