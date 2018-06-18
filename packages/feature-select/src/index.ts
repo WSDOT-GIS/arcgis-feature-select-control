@@ -71,6 +71,7 @@ export interface IFeatureOptionElement extends HTMLOptionElement {
 
 /**
  * Creates a select element for selecting features from a feature set.
+ * @param select - An HTML select element.
  * @param featureSet - A feature set
  * @param labelField - The field of featureSet used for labelling the option corresponding to a feature.
  * If omitted, the feature set's "displayFieldName" property will be used.
@@ -79,37 +80,21 @@ export interface IFeatureOptionElement extends HTMLOptionElement {
  * not been defined.
  */
 export function createFeatureSelect(
-  featureSet: IFeatureSet,
+  select: HTMLSelectElement,
+  featureSet?: IFeatureSet,
   labelField?: string
 ): IFeatureSelect {
-  let { displayFieldName } = featureSet;
-  const { features, fields } = featureSet;
+  // Add default empty option
+  const emptyOption = document.createElement("option");
+  emptyOption.selected = true;
+  select.appendChild(emptyOption);
 
-  // Determine which field will be used to label the options.
-  if (labelField) {
-    displayFieldName = labelField;
-  } else if (!displayFieldName) {
-    displayFieldName = getFirstStringField(fields || features[0].attributes);
+  if (featureSet) {
+    const optionsFrag = createFeatureOptions(featureSet, labelField);
+    select.appendChild(optionsFrag);
   }
 
-  if (!displayFieldName) {
-    throw new TypeError(
-      "Could not determine display field name from feature set."
-    );
-  }
-
-  const select = document.createElement("select") as IFeatureSelect;
-
-  for (const feature of features) {
-    const { attributes, geometry } = feature;
-    const option = document.createElement("option");
-    const label = attributes[displayFieldName];
-    option.label = option.title = option.innerText = label;
-    populateElementDataset(option, feature);
-    select.appendChild(option);
-  }
-
-  select.addEventListener("select", () => {
+  select.addEventListener("change", () => {
     const { selectedOptions } = select;
     const detail = new Array<IFeature>();
     for (const option of selectedOptions) {
@@ -133,4 +118,33 @@ export function createFeatureSelect(
   });
 
   return select;
+}
+
+function createFeatureOptions(
+  featureSet: IFeatureSet,
+  labelField: string | undefined
+) {
+  const frag = document.createDocumentFragment();
+  let { displayFieldName } = featureSet;
+  const { features, fields } = featureSet;
+  // Determine which field will be used to label the options.
+  if (labelField) {
+    displayFieldName = labelField;
+  } else if (!displayFieldName) {
+    displayFieldName = getFirstStringField(fields || features[0].attributes);
+  }
+  if (!displayFieldName) {
+    throw new TypeError(
+      "Could not determine display field name from feature set."
+    );
+  }
+  for (const feature of features) {
+    const { attributes } = feature;
+    const option = document.createElement("option");
+    const label = attributes[displayFieldName];
+    option.label = option.title = option.innerText = label;
+    populateElementDataset(option, feature);
+    frag.appendChild(option);
+  }
+  return frag;
 }
