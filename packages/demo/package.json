@@ -9,7 +9,7 @@
   "author": "WSDOT",
   "private": true,
   "license": "Unlicense",
-  "dependencies": {
+  "devDependencies": {
     "@types/arcgis-js-api": "^4.7.0",
     "@wsdot/arcgis-feature-select": "^0.0.0",
     "prettier": "^1.13.5",
