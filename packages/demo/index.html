@@ -6,7 +6,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Feature Select Demo</title>
-    <link rel="stylesheet" href="https://js.arcgis.com/4.7/esri/css/main.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/4.8/esri/css/main.css">
     <style>
         html,
         body,
@@ -24,6 +24,9 @@
         (() => {
             const root = location.href.replace(/\/(?:index.html)?$/, "/");
             const dojoConfig = {
+                has: {
+                    "esri-featurelayer-webgl": 1
+                },
                 packages: [
                     {
                         name: "app",
@@ -34,7 +37,7 @@
             window.dojoConfig = dojoConfig;
         })();
     </script>
-    <script src="https://js.arcgis.com/4.7/dojo/dojo.js" integrity="sha384-9Ny576IyEFauOfetOprinQCPVDdzLxYSSBXkzniGe7uSBpSAIcdTr3GNXlcpaou1"
+    <script src="https://js.arcgis.com/4.8/dojo/dojo.js" integrity="sha384-8uCr30yTWBe0cn6UdQ2lKkq1z4q0ug5Oe8vjR6SvJNxChPXUK7Lizmi7GxYVDUKv"
         crossorigin="anonymous"></script>
     <div id="mapView"></div>
     <script>require(["app"]);</script>

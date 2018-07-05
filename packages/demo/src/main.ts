@@ -7,6 +7,7 @@ import Extent from "esri/geometry/Extent";
 import Graphic from "esri/Graphic";
 import FeatureLayer from "esri/layers/FeatureLayer";
 import EsriMap from "esri/Map";
+import PopupTemplate from "esri/PopupTemplate";
 import MapView from "esri/views/MapView";
 
 // Create the map.
@@ -39,6 +40,10 @@ featureSelect.disabled = true;
 // Add the select to the map.
 view.ui.add(featureSelect, "top-right");
 
+const countyTemplate = new PopupTemplate({
+  title: "{JURLBL}"
+});
+
 // Create the feature layer for querying.
 const featureLayer = new FeatureLayer({
   url:
@@ -54,15 +59,19 @@ featureSelect.addEventListener("featureselect", ev => {
     // be converted to ArcGIS API objects before being used  by the map view.
     // Normally there will only be one graphic in the array, unless the select element
     // is set to allow the user to select multiple items at a time.
-    const graphics = features.map(Graphic.fromJSON);
+    const graphics = features.map(f => {
+      const g = Graphic.fromJSON(f);
+      g.popupTemplate = countyTemplate;
+      return g;
+    });
     // zoom to the selected features.
     view.goTo(graphics);
     // Open the view's popup.
     view.popup.open({
       features: graphics,
-      title: "{JURLBL}",
       location: (graphics[0].geometry as Polygon).centroid
     });
+    view.popup.selectedFeatureIndex = 0;
   }
 });
 
