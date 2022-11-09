@@ -4,16 +4,16 @@
   "description": "Demo for @wsdot/arcgis-feature-select",
   "main": "index.js",
   "scripts": {
-    "prepare": "webpack"
+    "disable-prepare": "webpack"
   },
   "author": "WSDOT",
   "private": true,
   "license": "Unlicense",
   "devDependencies": {
-    "@types/arcgis-js-api": "^4.7.0",
+    "@types/arcgis-js-api": "^4.24.0",
     "@wsdot/arcgis-feature-select": "^0.0.0",
-    "ts-loader": "^4.4.2",
-    "webpack": "^4.15.1",
-    "webpack-cli": "^3.0.8"
+    "ts-loader": "^9.4.1",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   }
 }
