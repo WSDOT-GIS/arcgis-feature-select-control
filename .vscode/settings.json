@@ -1,4 +1,12 @@
 {
     "tslint.autoFixOnSave": true,
-    "typescript.tsdk": "node_modules\\typescript\\lib"
+    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "json.schemas": [
+        {
+            "fileMatch": [
+                ".eslintrc.json"
+            ],
+            "url": "https://json.schemastore.org/eslintrc.json"
+        }
+    ]
 }
