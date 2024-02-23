@@ -14,6 +14,6 @@
     "@wsdot/arcgis-feature-select": "^0.0.0",
     "ts-loader": "^4.4.2",
     "webpack": "^4.15.1",
-    "webpack-cli": "^3.0.8"
+    "webpack-cli": "^3.3.12"
   }
 }
