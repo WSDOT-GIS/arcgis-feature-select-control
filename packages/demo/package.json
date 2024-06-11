@@ -12,8 +12,8 @@
   "devDependencies": {
     "@types/arcgis-js-api": "^4.7.0",
     "@wsdot/arcgis-feature-select": "^0.0.0",
-    "ts-loader": "^4.4.2",
-    "webpack": "^4.47.0",
-    "webpack-cli": "^3.3.12"
+    "ts-loader": "^9.5.1",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
   }
 }
